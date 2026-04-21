@@ -3673,8 +3673,8 @@ def tela_login():
             st.markdown(
                 f"<div style='text-align:center;margin-bottom:28px;'>"
                 f"<div style='display:flex;justify-content:center;margin-bottom:14px;'>{_logo_tag}</div>"
-                f"<div style='font-size:1.45rem;font-weight:800;color:#0f172a;line-height:1.35;'>"
-                f"Sistema de<br>Lançamentos<br>Contábeis</div>"
+                f"<div style='font-size:1.8rem;font-weight:800;color:#0f172a;line-height:1.35;'>"
+                f"Conciliador</div>"
                 f"<div style='font-size:0.82rem;color:#94a3b8;margin-top:6px;'>"
                 f"Faça login para continuar</div>"
                 f"</div>",
