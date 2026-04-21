@@ -3585,13 +3585,13 @@ def tela_login():
     from pathlib import Path as _Path
 
     # Carrega logo como base64
-    _logo_path = _Path(__file__).parent / "logo_igp.png"
+    _logo_path = _Path(__file__).parent.parent / "assets" / "logo_igp.png"
     _logo_b64 = ""
     if _logo_path.exists():
         _logo_b64 = _b64.b64encode(_logo_path.read_bytes()).decode()
     _logo_tag = (
         f'<img src="data:image/png;base64,{_logo_b64}" '
-        f'style="width:72px;height:72px;object-fit:contain;border-radius:50%;" />'
+        f'style="width:90px;height:90px;object-fit:contain;" />'
         if _logo_b64 else
         '<div style="width:72px;height:72px;border-radius:50%;background:#dbeafe;'
         'display:flex;align-items:center;justify-content:center;'
