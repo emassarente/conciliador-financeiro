@@ -18,8 +18,8 @@ xlrd>=2.0.1
 # Similaridade de texto (fuzzy matching)
 rapidfuzz>=3.6.0
 
-# Automação Web (RPA)
-playwright>=1.42.0
+# Automação Web (RPA) - DESABILITADO para Streamlit Cloud
+# playwright>=1.42.0
 
 # Leitura de PDFs bancários (Itaú, CEF, Nexoos, C6 Bank)
 pdfplumber>=0.10.0
