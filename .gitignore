@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# Banco de dados (fazer backup separado)
+database/*.db
+database/*.db-journal
+database/backup_*.db
+
+# Logs
+logs/
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Dados sensíveis
+data/extratos_gas/*.pdf
+data/extratos_gas/*.xlsx
+data/*.xls
+data/*.xlsx
+data/*.pdf
+SENHAS_SISTEMA.md
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Backups
+*.bak
+backup/

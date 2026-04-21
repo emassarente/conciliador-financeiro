@@ -1,0 +1,33 @@
+# =============================================================================
+# CONFIGURAÇÃO STREAMLIT PARA PRODUÇÃO
+# =============================================================================
+
+[server]
+# Porta do servidor (pode ser alterada conforme necessário)
+port = 8502
+# Permite acesso externo
+headless = true
+# Desabilita CORS para permitir acesso via proxy reverso
+enableCORS = false
+enableXsrfProtection = false
+# Base URL para rodar em subpath (ex: /conciliador)
+# Para teste local: comente esta linha
+# Para produção: descomente esta linha
+baseUrlPath = "/conciliador"
+
+[browser]
+# Não abre browser automaticamente
+gatherUsageStats = false
+serverAddress = "c2minstituto.com.br"
+
+[theme]
+primaryColor = "#2563eb"
+backgroundColor = "#f0f2f6"
+secondaryBackgroundColor = "#ffffff"
+textColor = "#0f172a"
+font = "sans serif"
+
+[client]
+# Timeout maior para uploads grandes
+toolbarMode = "minimal"
+showErrorDetails = false

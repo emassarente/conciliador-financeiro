@@ -1,0 +1,122 @@
+═══════════════════════════════════════════════════════════════════════════════
+  INSTRUÇÕES PARA CONFIGURAR PROXY REVERSO NO CPANEL (NAMECHEAP)
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 OBJETIVO: Fazer c2minstituto.com.br/conciliador apontar para localhost:8502
+
+═══════════════════════════════════════════════════════════════════════════════
+OPÇÃO 1: Via .htaccess (Apache) - MAIS FÁCIL
+═══════════════════════════════════════════════════════════════════════════════
+
+1. No cPanel, vá em "File Manager"
+2. Navegue até: public_html/
+3. Edite (ou crie) o arquivo .htaccess
+4. Adicione no FINAL do arquivo:
+
+─────────────────────────────────────────────────────────────────────────────
+# Proxy Reverso para Sistema de Conciliação
+<IfModule mod_proxy.c>
+    ProxyPreserveHost On
+    ProxyPass /conciliador http://localhost:8502/conciliador
+    ProxyPassReverse /conciliador http://localhost:8502/conciliador
+</IfModule>
+─────────────────────────────────────────────────────────────────────────────
+
+5. Salvar o arquivo
+6. Testar: https://c2minstituto.com.br/conciliador
+
+⚠️ IMPORTANTE: Se der erro "500 Internal Server Error", o mod_proxy pode não 
+estar habilitado. Neste caso, use a Opção 2.
+
+═══════════════════════════════════════════════════════════════════════════════
+OPÇÃO 2: Via cPanel "Application Manager" (se disponível)
+═══════════════════════════════════════════════════════════════════════════════
+
+1. No cPanel, procure por "Setup Python App" ou "Application Manager"
+2. Clique em "Create Application"
+3. Preencha:
+   - Python version: 3.9 ou superior
+   - Application root: /home/dese7735/conciliador
+   - Application URL: conciliador
+   - Application startup file: ui/dashboard.py
+   - Application Entry point: (deixe vazio)
+   
+4. Clique em "Create"
+
+═══════════════════════════════════════════════════════════════════════════════
+OPÇÃO 3: Subdomínio (ALTERNATIVA MAIS FÁCIL)
+═══════════════════════════════════════════════════════════════════════════════
+
+Se as opções acima não funcionarem, crie um subdomínio:
+
+1. No cPanel, vá em "Subdomains"
+2. Crie: conciliador.c2minstituto.com.br
+3. Document Root: /home/dese7735/conciliador
+4. Crie arquivo .htaccess dentro de /home/dese7735/conciliador/:
+
+─────────────────────────────────────────────────────────────────────────────
+RewriteEngine On
+RewriteRule ^(.*)$ http://localhost:8502/$1 [P,L]
+─────────────────────────────────────────────────────────────────────────────
+
+5. Acesse: https://conciliador.c2minstituto.com.br
+
+═══════════════════════════════════════════════════════════════════════════════
+OPÇÃO 4: Contatar Suporte NameCheap
+═══════════════════════════════════════════════════════════════════════════════
+
+Se nenhuma opção funcionar, abra um ticket pedindo:
+
+"Preciso configurar um proxy reverso Apache para:
+ - URL: c2minstituto.com.br/conciliador
+ - Destino: localhost:8502
+ - Aplicação: Python Streamlit rodando na porta 8502"
+
+═══════════════════════════════════════════════════════════════════════════════
+VERIFICAR SE ESTÁ FUNCIONANDO
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Via SSH, verificar se Streamlit está rodando:
+   ps aux | grep streamlit
+
+2. Testar localmente no servidor:
+   curl http://localhost:8502/conciliador
+
+3. Testar externamente:
+   https://c2minstituto.com.br/conciliador
+
+═══════════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════════════════════
+
+❌ Erro 404: Proxy não configurado corretamente
+   → Revisar .htaccess ou configuração do proxy
+
+❌ Erro 502 Bad Gateway: Streamlit não está rodando
+   → Executar: ./start_servidor.sh
+   → Verificar: tail -f logs/streamlit.log
+
+❌ Erro 500: mod_proxy não habilitado
+   → Contatar suporte NameCheap
+
+❌ Página em branco: Firewall bloqueando porta 8502
+   → Verificar firewall do servidor
+   → Contatar suporte NameCheap
+
+═══════════════════════════════════════════════════════════════════════════════
+MANTER RODANDO PERMANENTEMENTE
+═══════════════════════════════════════════════════════════════════════════════
+
+O script start_servidor.sh já usa 'nohup' para rodar em background.
+
+Para garantir que reinicie automaticamente após reboot do servidor:
+
+1. Edite o crontab:
+   crontab -e
+
+2. Adicione:
+   @reboot /home/dese7735/conciliador/start_servidor.sh
+
+3. Salvar e sair
+
+═══════════════════════════════════════════════════════════════════════════════
