@@ -8,7 +8,5 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT))
 
-# Importa e executa o dashboard
-from ui import dashboard
-
-# O Streamlit vai executar automaticamente o módulo dashboard
+# Executa o dashboard diretamente
+exec(open(ROOT / "ui" / "dashboard.py", encoding="utf-8").read())
