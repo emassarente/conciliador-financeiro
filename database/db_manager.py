@@ -9,14 +9,19 @@ import sqlite3
 import hashlib
 import logging
 import pandas as pd
+import os
 from pathlib import Path
 from datetime import datetime, date
 from typing import Optional, List, Dict
 
 logger = logging.getLogger(__name__)
 
-# Caminho padrão do banco (dentro da pasta do projeto)
-DB_PATH_PADRAO = Path(__file__).parent / "conciliacao.db"
+# Caminho padrão do banco (compatível com Streamlit Cloud)
+# No Streamlit Cloud, usa /tmp (write-enabled), localmente usa pasta database
+if os.path.exists("/mount/src"):  # Streamlit Cloud
+    DB_PATH_PADRAO = Path("/tmp/conciliacao.db")
+else:  # Local
+    DB_PATH_PADRAO = Path(__file__).parent / "conciliacao.db"
 
 
 class DatabaseManager:
