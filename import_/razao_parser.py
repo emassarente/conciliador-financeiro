@@ -348,7 +348,10 @@ class RazaoParser:
 
         with pdfplumber.open(str(caminho)) as pdf:
             todas_linhas = []
-            for page in pdf.pages:
+            # Limite de 200 páginas para evitar travamento
+            max_pages = min(len(pdf.pages), 200)
+            logger.info(f"📄 Processando {max_pages} páginas...")
+            for page in pdf.pages[:max_pages]:
                 txt = page.extract_text(x_tolerance=3, y_tolerance=3) or ""
                 todas_linhas.extend(txt.splitlines())
 
